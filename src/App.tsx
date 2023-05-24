@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import Button, { ButtonTypes } from "./components/Button";
 import Input from "./components/Input";
+import Username from "./components/Username";
 
 const App = () => {
   const [index, setIndex] = useState(1);
@@ -54,6 +55,7 @@ const App = () => {
         onChange={onChange}
         value={inputValue}
       />
+      <Username username={'Vladislav'} />
     </div>
   );
 };
