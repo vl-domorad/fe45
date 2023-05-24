@@ -1,30 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Button, { ButtonTypes } from "./components/Button";
+import Input from "./components/Input";
 
 const App = () => {
+  const [index, setIndex] = useState(1);
+  const [inputValue, setInputValue] = useState("");
+
+  const onClickPrimary = () => {
+    setIndex((prevIndex) => prevIndex + 1);
+  };
+
+  const buttonArray = [
+    {
+      type: ButtonTypes.Primary,
+      title: index.toString(),
+      onClick: onClickPrimary,
+    },
+    {
+      type: ButtonTypes.Secondary,
+      title: "Secondary",
+      onClick: () => {
+        alert("Secondary");
+      },
+    },
+    {
+      type: ButtonTypes.Error,
+      title: "Error",
+      onClick: () => {
+        alert("Error");
+      },
+    },
+  ];
+
+  const onChange = (value: string) => {
+    setInputValue(value);
+  };
+
   return (
     <div>
-      <Button
-        type={ButtonTypes.Primary}
-        title={"Primary"}
-        onClick={() => {
-          alert("Primary");
-        }}
-      />
-      <Button
-        type={ButtonTypes.Secondary}
-        title={"Secondary"}
-        onClick={() => {
-          alert("Secondary");
-        }}
-      />
-      <Button
-        type={ButtonTypes.Error}
-        title={"Error"}
-        onClick={() => {
-          alert("Error");
-        }}
+      {buttonArray.map(({ type, title, onClick }, index) => (
+        <Button
+          key={`${type}_${index}`}
+          type={type}
+          title={title}
+          onClick={onClick}
+        />
+      ))}
+      <Input
+        isTextarea
+        title={"Test Input"}
+        placeholder={"Hello World!"}
+        onChange={onChange}
+        value={inputValue}
       />
     </div>
   );
