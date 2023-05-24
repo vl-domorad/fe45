@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button, { ButtonTypes } from "./components/Button";
 import Input from "./components/Input";
 import Username from "./components/Username";
+import { DislikeIcon } from "./assets/icons";
 
 const App = () => {
   const [index, setIndex] = useState(1);
@@ -55,7 +56,8 @@ const App = () => {
         onChange={onChange}
         value={inputValue}
       />
-      <Username username={'Vladislav'} />
+      <Username username={"Vladislav"} />
+      <DislikeIcon width={"40"} height={"40"} />
     </div>
   );
 };
