@@ -1,12 +1,14 @@
-import React from "react";
-import { FC } from "react"
-import styles from './Title.module.scss';
+import React, { FC } from "react";
+import classNames from "classnames";
+
+import styles from "./Title.module.scss";
 
 type TitleProps = {
   title: string;
+  className?: string;
 };
 
-const Title: FC<TitleProps> = ({ title }) => {
-  return <div className={styles.title}>{title}</div>;
+const Title: FC<TitleProps> = ({ title, className }) => {
+  return <div className={classNames(styles.title, className)}>{title}</div>;
 };
 export default Title;
