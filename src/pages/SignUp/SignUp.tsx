@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import FormPagesContainer from "../../components/FormPagesContainer";
-import Input from "../../components/Input";
-import { useThemeContext } from "../../context/Theme";
-import styles from "./SignUp.module.scss";
+import FormPagesContainer from "src/components/FormPagesContainer";
+import Input from "src/components/Input";
+import { useThemeContext } from "src/context/Theme";
 import classNames from "classnames";
-import { Theme } from "../../@types";
+import { Theme } from "src/@types";
+
+import styles from "./SignUp.module.scss";
 
 const SignUp = () => {
   const [name, setName] = useState("");

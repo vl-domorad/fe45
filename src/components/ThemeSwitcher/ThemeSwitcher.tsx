@@ -1,10 +1,11 @@
 import React from "react";
 import classNames from "classnames";
 
-import { useThemeContext } from "../../context/Theme";
-import { MoonIcon, SunIcon } from "../../assets/icons";
+import { useThemeContext } from "src/context/Theme";
+import { MoonIcon, SunIcon } from "src/assets/icons";
+import { Theme } from "src/@types";
+
 import styles from "./ThemeSwitcher.module.scss";
-import { Theme } from "../../@types";
 
 const ThemeSwitcher = () => {
   const { themeValue, onChangeTheme } = useThemeContext();

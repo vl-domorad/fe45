@@ -1,11 +1,12 @@
 import React, { FC, ReactElement } from "react";
+import classNames from "classnames";
 
+import { Children, Theme } from "src/@types";
+import { useThemeContext } from "src/context/Theme";
+
+import Button, { ButtonTypes } from "../Button";
 import Title from "../Title";
 import styles from "./FormPagesContainer.module.scss";
-import Button, { ButtonTypes } from "../Button";
-import { Children, Theme } from "../../@types";
-import { useThemeContext } from "../../context/Theme";
-import classNames from "classnames";
 
 type FormPagesContainerProps = {
   title: string;

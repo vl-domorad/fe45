@@ -1,10 +1,14 @@
 import React, { FC } from "react";
-import styles from "./Card.module.scss";
 import classNames from "classnames";
 
-import { DislikeIcon, DotsMenuIcon } from "../../assets/icons";
-import { LikeIcon } from "../../assets/icons";
-import { BookmarkIcon } from "../../assets/icons";
+import {
+  DislikeIcon,
+  DotsMenuIcon,
+  LikeIcon,
+  BookmarkIcon,
+} from "src/assets/icons";
+
+import styles from "./Card.module.scss";
 
 export enum CardTypes {
   Large = "large",
@@ -61,6 +65,5 @@ const Card: FC<CardProps> = ({
     </div>
   );
 };
-
 
 export default Card;
