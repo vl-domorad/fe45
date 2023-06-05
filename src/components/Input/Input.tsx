@@ -2,6 +2,8 @@ import React, { ChangeEvent, forwardRef, LegacyRef } from "react";
 import classNames from "classnames";
 
 import styles from "./Input.module.scss";
+import { useThemeContext } from "../../context/Theme";
+import { Theme } from "../../@types";
 
 type InputProps = {
   title: string;
@@ -33,6 +35,9 @@ const Input = forwardRef<
       value,
       isTextarea,
     } = props;
+
+    const { themeValue } = useThemeContext();
+
     const onInputChange = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -50,7 +55,11 @@ const Input = forwardRef<
     };
 
     return (
-      <div className={styles.container}>
+      <div
+        className={classNames(styles.container, {
+          [styles.darkContainer]: themeValue === Theme.Dark,
+        })}
+      >
         <div className={styles.title}>{title}</div>
         {isTextarea ? (
           <textarea
