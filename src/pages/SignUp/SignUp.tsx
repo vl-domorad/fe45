@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import FormPagesContainer from "../../components/FormPagesContainer";
 import Input from "../../components/Input";
@@ -9,6 +9,15 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  // мы создаем сначала экземпляр нашей ref и говорим, что у нее будет тип HTMLInputElement | null
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [])
 
   return (
     <FormPagesContainer
@@ -27,6 +36,7 @@ const SignUp = () => {
         placeholder={"Your name"}
         onChange={setName}
         value={name}
+        ref={inputRef}
       />
       <Input
         title={"Email"}
