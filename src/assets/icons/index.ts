@@ -4,3 +4,5 @@ export { DotsMenuIcon } from "./DotsMenuIcon";
 export { BookmarkIcon } from "./BookmarkIcon";
 export { SunIcon } from "./SunIcon";
 export { MoonIcon } from "./MoonIcon";
+export { MenuIcon } from "./MenuIcon";
+export { CloseIcon } from "./CloseIcon";
