@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Title from "src/components/Title";
 import CardsList from "src/components/CardsList";
@@ -6,6 +6,7 @@ import TabsList from "src/components/TabsList";
 import { PostsList, TabsTypes } from "src/@types";
 
 import styles from "./Home.module.scss";
+import SelectedPostModal from "src/pages/Home/SelectedPostModal";
 
 const MOCK_ARRAY = [
   {
@@ -15,8 +16,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 1",
     description: "Описание поста",
     author: 10,
   },
@@ -27,8 +27,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 2",
     description: "Описание поста",
     author: 10,
   },
@@ -39,8 +38,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 3",
     description: "Описание поста",
     author: 10,
   },
@@ -51,8 +49,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 4",
     description: "Описание поста",
     author: 10,
   },
@@ -63,8 +60,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 5",
     description: "Описание поста",
     author: 10,
   },
@@ -75,8 +71,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 6",
     description: "Описание поста",
     author: 10,
   },
@@ -87,8 +82,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 7",
     description: "Описание поста",
     author: 10,
   },
@@ -99,8 +93,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 8",
     description: "Описание поста",
     author: 10,
   },
@@ -111,8 +104,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 9",
     description: "Описание поста",
     author: 10,
   },
@@ -123,8 +115,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 10",
     description: "Описание поста",
     author: 10,
   },
@@ -135,8 +126,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 11",
     description: "Описание поста",
     author: 10,
   },
@@ -147,8 +137,7 @@ const MOCK_ARRAY = [
     text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
     date: "12-10-2023",
     lesson_num: 12,
-    title:
-      "Astronauts prep for new solar arrays on nearly seven-hour spacewalk ...",
+    title: "Пост 12",
     description: "Описание поста",
     author: 10,
   },
@@ -174,7 +163,7 @@ const Home = () => {
 
   useEffect(() => {
     setCardsList(MOCK_ARRAY);
-  }, [])
+  }, []);
 
   const onTabClick = (tab: TabsTypes) => () => {
     setActiveTab(tab);
@@ -192,6 +181,7 @@ const Home = () => {
         onTabClick={onTabClick}
       />
       <CardsList cardsList={cardsList} />
+      <SelectedPostModal />
     </div>
   );
 };

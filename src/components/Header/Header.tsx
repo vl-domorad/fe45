@@ -1,16 +1,16 @@
 import React, { useMemo, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import classNames from "classnames";
 
 import Button, { ButtonTypes } from "src/components/Button";
 import { CloseIcon, MenuIcon } from "src/assets/icons";
-
-import styles from "./Header.module.scss";
 import ThemeSwitcher from "src/components/ThemeSwitcher";
 import { RoutesList } from "src/pages/Router";
 import Username from "src/components/Username";
 import { useThemeContext } from "src/context/Theme";
-import classNames from "classnames";
 import { Theme } from "src/@types";
+
+import styles from "./Header.module.scss";
 
 const Header = () => {
   const { themeValue } = useThemeContext();

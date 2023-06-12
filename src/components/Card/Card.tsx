@@ -24,17 +24,16 @@ type CardProps = {
   lesson_num?: number;
   title: string;
   author?: number;
+  onMoreClick?: () => void;
 };
 
 const Card: FC<CardProps> = ({
   type,
-  id,
   date,
   title,
   text,
   image,
-  lesson_num,
-  author,
+  onMoreClick,
 }) => {
   const cardStyle = styles[type];
 
@@ -59,7 +58,11 @@ const Card: FC<CardProps> = ({
         </div>
         <div className={styles.cardReacrionNavigation}>
           <BookmarkIcon />
-          <DotsMenuIcon />
+          {onMoreClick && (
+            <div onClick={onMoreClick}>
+              <DotsMenuIcon />
+            </div>
+          )}
         </div>
       </div>
     </div>
