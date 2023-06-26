@@ -1,16 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "src/redux/store";
-import { Post } from "src/@types";
+import { Post, PostsList } from "src/@types";
 
 type InitialState = {
   isSelectedPostModalOpened: boolean;
   selectedPost: Post | null;
+  postsList: PostsList;
 };
 
 const initialState: InitialState = {
   isSelectedPostModalOpened: false,
   selectedPost: null,
+  postsList: [],
 };
 
 const postSlice = createSlice({

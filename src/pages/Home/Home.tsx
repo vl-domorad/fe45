@@ -7,6 +7,7 @@ import { PostsList, TabsTypes } from "src/@types";
 
 import styles from "./Home.module.scss";
 import SelectedPostModal from "src/pages/Home/SelectedPostModal";
+import {useSelector} from "react-redux";
 
 const MOCK_ARRAY = [
   {
@@ -146,7 +147,8 @@ const MOCK_ARRAY = [
 const Home = () => {
   const [activeTab, setActiveTab] = useState(TabsTypes.All);
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [cardsList, setCardsList] = useState<PostsList>([]);
+  // const cardsList = useSelector()
+  const [cardsList, setCardsList] = useState<PostsList>([]); // TODO: убрать в домашке стейт
 
   const tabsList = useMemo(
     () => [
