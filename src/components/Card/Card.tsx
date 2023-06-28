@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 
 import {
   DislikeIcon,
@@ -7,6 +8,7 @@ import {
   LikeIcon,
   BookmarkIcon,
 } from "src/assets/icons";
+import { Post } from "src/@types";
 
 import styles from "./Card.module.scss";
 
@@ -15,17 +17,10 @@ export enum CardTypes {
   Medium = "medium",
   Small = "small",
 }
-type CardProps = {
-  type: CardTypes;
-  id: number;
-  image: string;
-  text: string;
-  date: string;
-  lesson_num?: number;
-  title: string;
-  author?: number;
+interface CardProps extends Post {
   onMoreClick?: () => void;
-};
+  type: CardTypes;
+}
 
 const Card: FC<CardProps> = ({
   type,
@@ -34,15 +29,24 @@ const Card: FC<CardProps> = ({
   text,
   image,
   onMoreClick,
+  id,
 }) => {
   const cardStyle = styles[type];
+
+  const navigate = useNavigate();
+
+  const onTitleClick = () => {
+    navigate(`/post/${id}`);
+  };
 
   return (
     <div className={classNames(cardStyle)}>
       <div className={styles.cardContent}>
         <div className={styles.cardTextContent}>
           <span className={styles.date}>{date}</span>
-          <div className={styles.cardTitle}>{title}</div>
+          <div className={styles.cardTitle} onClick={onTitleClick}>
+            {title}
+          </div>
           {type === CardTypes.Large && (
             <div className={styles.cardText}>{text}</div>
           )}
