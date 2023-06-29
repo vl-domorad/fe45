@@ -17,6 +17,13 @@ export enum RoutesList {
 }
 
 const Router = () => {
+
+
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     dispatch(getUserInfo());
+  //   }
+  // }, [isLoggedIn])
   return (
     <BrowserRouter>
       <Routes>
