@@ -1,13 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 
 import Title from "src/components/Title";
 import CardsList from "src/components/CardsList";
 import TabsList from "src/components/TabsList";
-import { PostsList, TabsTypes } from "src/@types";
+import {PostsList, TabsTypes} from "src/@types";
 
 import styles from "./Home.module.scss";
 import SelectedPostModal from "src/pages/Home/SelectedPostModal";
-import {useSelector} from "react-redux";
 
 const MOCK_ARRAY = [
   {
@@ -155,8 +154,8 @@ const Home = () => {
       { key: TabsTypes.All, title: "All Posts", disabled: false },
       { key: TabsTypes.Popular, title: "Popular Posts", disabled: false },
       {
-        key: TabsTypes.MyFavorite,
-        title: "Favourite Posts",
+        key: TabsTypes.MyPosts,
+        title: "My Posts",
         disabled: !isLoggedIn,
       },
     ],
@@ -166,6 +165,14 @@ const Home = () => {
   useEffect(() => {
     setCardsList(MOCK_ARRAY);
   }, []);
+
+  useEffect(()=> {
+    if (activeTab === TabsTypes.MyPosts) {
+      // dispatch(getMyPosts)
+    } else {
+      // dispatch(getAllPosts)
+    }
+  }, [activeTab])
 
   const onTabClick = (tab: TabsTypes) => () => {
     setActiveTab(tab);

@@ -9,12 +9,14 @@ import { getSinglePost, PostSelectors } from "src/redux/reducers/postSlice";
 
 import styles from "./SelectedPost.module.scss";
 import { RoutesList } from "src/pages/Router";
+import Loader from "src/components/Loader";
 
 const SelectedPost = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const singlePost = useSelector(PostSelectors.getSinglePost);
+  const isSinglePostLoading = useSelector(PostSelectors.getSinglePostLoading);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const SelectedPost = () => {
     navigate(RoutesList.Home);
   };
 
-  return singlePost ? (
+  return singlePost && !isSinglePostLoading ? (
     <div className={styles.container}>
       <div className={styles.breadcrumbs}>
         <span onClick={onHomeClick}>Home</span>{" "}
@@ -54,6 +56,8 @@ const SelectedPost = () => {
         </div>
       </div>
     </div>
-  ) : null;
+  ) : (
+    <Loader />
+  );
 };
 export default SelectedPost;

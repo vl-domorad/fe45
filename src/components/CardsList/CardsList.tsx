@@ -9,6 +9,7 @@ import {
   setSelectedPost,
   setSelectedPostModalOpened,
 } from "src/redux/reducers/postSlice";
+import Loader from "src/components/Loader";
 
 type CardsListProps = {
   cardsList: PostsList;
@@ -62,7 +63,9 @@ const CardsList: FC<CardsListProps> = ({ cardsList }) => {
         })}
       </div>
     </div>
-  ) : null;
+  ) : (
+    <Loader />
+  );
 };
 
 export default CardsList;
