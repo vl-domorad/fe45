@@ -1,5 +1,5 @@
 import { create } from "apisauce";
-import { ActivateUserData, SignUpUserData } from "src/redux/@types";
+import { ActivateUserData, SignInData, SignUpUserData } from "src/redux/@types";
 
 const API = create({
   baseURL: "https://studapi.teachmeskills.by",
@@ -33,10 +33,15 @@ const getUserInfo = (token: string) => {
   );
 };
 
+const createToken = (data: SignInData) => {
+  return API.post("/auth/jwt/create/", data);
+};
+
 export default {
   signUpUser,
   getPosts,
   activateUser,
   getSinglePost,
   getUserInfo,
+  createToken,
 };

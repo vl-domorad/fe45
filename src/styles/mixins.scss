@@ -58,3 +58,13 @@
     color: $primary;
   }
 }
+
+@mixin signLink {
+  color: $primary;
+  margin-left: 4px;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import {useSelector} from "react-redux";
 
 import Button, { ButtonTypes } from "src/components/Button";
 import { CloseIcon, MenuIcon } from "src/assets/icons";
@@ -11,11 +12,12 @@ import { useThemeContext } from "src/context/Theme";
 import { Theme } from "src/@types";
 
 import styles from "./Header.module.scss";
+import {AuthSelectors} from "src/redux/reducers/authSlice";
 
 const Header = () => {
   const { themeValue } = useThemeContext();
 
-  const isLoggedIn = true;
+  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
 
   const [isOpened, setOpened] = useState(false);
 
