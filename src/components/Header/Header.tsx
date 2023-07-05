@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import classNames from "classnames";
-import {useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button, { ButtonTypes } from "src/components/Button";
 import { CloseIcon, MenuIcon } from "src/assets/icons";
@@ -12,12 +12,13 @@ import { useThemeContext } from "src/context/Theme";
 import { Theme } from "src/@types";
 
 import styles from "./Header.module.scss";
-import {AuthSelectors} from "src/redux/reducers/authSlice";
+import { AuthSelectors, logoutUser } from "src/redux/reducers/authSlice";
 
 const Header = () => {
   const { themeValue } = useThemeContext();
 
-  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
 
   const [isOpened, setOpened] = useState(false);
 
@@ -37,6 +38,10 @@ const Header = () => {
 
   const onLoginButtonClick = () => {
     navigate(RoutesList.SignIn);
+  };
+
+  const onLogout = () => {
+    dispatch(logoutUser());
   };
 
   return (
@@ -80,7 +85,7 @@ const Header = () => {
             <Button
               type={ButtonTypes.Secondary}
               title={isLoggedIn ? "Log Out" : "Sign In"}
-              onClick={onLoginButtonClick}
+              onClick={isLoggedIn ? onLogout : onLoginButtonClick}
               className={styles.authButton}
             />
           </div>

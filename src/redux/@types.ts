@@ -23,13 +23,22 @@ export type SignUpUserPayload = PayloadWithDataAndCallback<SignUpUserData>;
 export type ActivateUserPayload = PayloadWithDataAndCallback<ActivateUserData>;
 
 export type SignInData = {
-  email: string,
-  password: string,
-}
+  email: string;
+  password: string;
+};
 
-export type SignInUserPayload = PayloadWithDataAndCallback<SignInData>
+export type SignInUserPayload = PayloadWithDataAndCallback<SignInData>;
 
 export type SignInUserResponseData = {
-  access: string,
-  refresh: string,
+  access: string;
+  refresh: string;
+};
+
+export type RefreshResponseData = {
+  access: string;
+};
+export type UserInfoPayload = {
+  username: string;
+  email: string;
+  id: number;
 }
