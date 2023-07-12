@@ -7,3 +7,4 @@ export { MoonIcon } from "./MoonIcon";
 export { MenuIcon } from "./MenuIcon";
 export { CloseIcon } from "./CloseIcon";
 export { SearchIcon } from "./SearchIcon";
+export { EmptyListIcon } from "./EmptyListIcon";

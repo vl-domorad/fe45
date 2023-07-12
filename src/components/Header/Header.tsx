@@ -40,6 +40,13 @@ const Header = () => {
   const handleMenuOpened = () => {
     setOpened(!isOpened);
   };
+  const handleSearchOpened = () => {
+    setSearch(!isSearch);
+    if (isSearch && inputValue) {
+      navigate(`posts/${inputValue}`);
+      setInputValue("");
+    }
+  };
 
   const onLoginButtonClick = () => {
     navigate(RoutesList.SignIn);
@@ -47,9 +54,6 @@ const Header = () => {
 
   const onLogout = () => {
     dispatch(logoutUser());
-  };
-  const handleSearchOpened = () => {
-    setSearch(!isSearch);
   };
 
   return (

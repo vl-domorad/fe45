@@ -9,6 +9,7 @@ import Header from "src/components/Header";
 import SelectedPost from "src/pages/SelectedPost";
 import SignIn from "src/pages/SignIn";
 import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice";
+import Search from "src/pages/Search";
 
 export enum RoutesList {
   Home = "/",
@@ -16,6 +17,8 @@ export enum RoutesList {
   SignIn = "/sign-in",
   RegistrationConfirmation = "/activate/:uid/:token",
   SelectedPost = "/post/:id",
+  Search = "/posts/:search",
+
   Default = "*",
 }
 
@@ -60,6 +63,7 @@ const Router = () => {
             path={RoutesList.RegistrationConfirmation}
             element={<RegistrationConfirmation />}
           />
+          <Route path={RoutesList.Search} element={<Search />} />
           <Route
             path={RoutesList.Default}
             element={<Navigate to={RoutesList.Home} />}

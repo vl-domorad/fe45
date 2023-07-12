@@ -16,6 +16,7 @@ export enum CardTypes {
   Large = "large",
   Medium = "medium",
   Small = "small",
+  Search = "search"
 }
 interface CardProps extends Post {
   onMoreClick?: () => void;

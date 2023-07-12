@@ -12,6 +12,10 @@ import { ApiResponse } from "apisauce";
 import API from "src/utils/api";
 import { Post } from "src/@types";
 import { GetPostsPayload, GetPostsResponseData } from "src/redux/@types";
+import {
+  getSearchedPosts,
+  setSearchedPosts,
+} from "src/redux/reducers/postSlice";
 
 function* getSinglePostWorker(action: PayloadAction<string>) {
   yield put(setSinglePostLoading(true));
@@ -48,9 +52,22 @@ function* getPostsWorker(action: PayloadAction<GetPostsPayload>) {
   yield put(setPostsListLoading(false));
 }
 
+function* getSearchedPostsWorker(action: PayloadAction<string>) {
+  const response: ApiResponse<GetPostsResponseData> = yield call(
+    API.getPosts,
+    0,
+    action.payload
+  );
+  if (response.ok && response.data) {
+    yield put(setSearchedPosts(response.data.results));
+  } else {
+    console.error("Searched Posts error", response.problem);
+  }
+}
 export default function* postsWatcher() {
   yield all([
     takeLatest(getSinglePost, getSinglePostWorker),
     takeLatest(getPostsList, getPostsWorker),
+    takeLatest(getSearchedPosts, getSearchedPostsWorker),
   ]);
 }

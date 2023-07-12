@@ -68,3 +68,58 @@
     text-decoration: underline;
   }
 }
+
+@mixin smallCard {
+  max-width: 352px;
+
+  .cardContent {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 24px;
+    // gap: 32px;
+  }
+
+  .cardTextContent {
+    max-width: 222px;
+  }
+
+  .date {
+    @include cardSpan();
+  }
+
+  .cardTitle {
+    @include cardTitle();
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .cardImage {
+    width: 96px;
+    height: 96px;
+  }
+
+  .cardImage img {
+    @include cardImageImg();
+  }
+
+  .cardReaction {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 41px;
+    border-bottom: 1px solid $medium;
+  }
+
+  .cardReationLikeDislike,
+  .cardReacrionNavigation {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

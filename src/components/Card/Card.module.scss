@@ -1,5 +1,7 @@
 @import "src/styles/colors";
 @import "src/styles/mixins";
+
+
 * {
   padding: 0;
   margin: 0;
@@ -122,56 +124,18 @@
 }
 // small
 .small {
-  max-width: 352px;
+  @include smallCard();
+}
 
+.small {
+  @include smallCard();
+}
+
+.search {
+  @include smallCard();
+  max-width: unset;
   .cardContent {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    margin-bottom: 24px;
-    // gap: 32px;
-  }
-
-  .cardTextContent {
-    max-width: 222px;
-  }
-
-  .date {
-    @include cardSpan();
-  }
-
-  .cardTitle {
-    @include cardTitle();
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 28px;
-  }
-
-  .cardImage {
-    width: 96px;
-    height: 96px;
-  }
-
-  .cardImage img {
-    @include cardImageImg();
-  }
-
-  .cardReaction {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 0 41px;
-    border-bottom: 1px solid $medium;
-  }
-
-  .cardReationLikeDislike,
-  .cardReacrionNavigation {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-
-    &:hover {
-      cursor: pointer;
-    }
+    flex-direction: row-reverse;
+    justify-content: flex-end;
   }
 }
