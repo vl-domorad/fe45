@@ -13,9 +13,10 @@ import Loader from "src/components/Loader";
 
 type CardsListProps = {
   cardsList: PostsList;
+  isLoading: boolean;
 };
 
-const CardsList: FC<CardsListProps> = ({ cardsList }) => {
+const CardsList: FC<CardsListProps> = ({ cardsList, isLoading }) => {
   const dispatch = useDispatch();
   const onMoreClick = (post: Post) => () => {
     dispatch(setSelectedPostModalOpened(true));
@@ -25,7 +26,7 @@ const CardsList: FC<CardsListProps> = ({ cardsList }) => {
     // null - payload, т е сами данные, которые летят в ф-ии, которые их меняют
   };
 
-  return cardsList.length ? (
+  return cardsList.length && !isLoading ? (
     <div className={styles.cardListContainer}>
       <div className={styles.cardListWrap}>
         <Posts

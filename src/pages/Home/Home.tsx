@@ -1,153 +1,35 @@
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Title from "src/components/Title";
 import CardsList from "src/components/CardsList";
 import TabsList from "src/components/TabsList";
-import {PostsList, TabsTypes} from "src/@types";
+import { TabsTypes } from "src/@types";
+import SelectedPostModal from "src/pages/Home/SelectedPostModal";
+import { getPostsList, PostSelectors } from "src/redux/reducers/postSlice";
+import { PER_PAGE } from "src/utils/constants";
+import Pagination from "src/components/Pagination";
 
 import styles from "./Home.module.scss";
-import SelectedPostModal from "src/pages/Home/SelectedPostModal";
-
-const MOCK_ARRAY = [
-  {
-    id: 0,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 1",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 1,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 2",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 2,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 3",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 3,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 4",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 4,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 5",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 5,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 6",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 6,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 7",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 7,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 8",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 8,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 9",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 9,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 10",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 10,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 11",
-    description: "Описание поста",
-    author: 10,
-  },
-  {
-    id: 11,
-    image:
-      "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
-    text: "Astronauts Kayla Barron and Raja Chari floated out of the International Space Station airlock for a spacewalk Tuesday, installing brackets and struts to support new solar arrays to upgrade the research lab’s power system on the same day that crewmate Mark Vande Hei marked his 341st day in orbit, a U.S. record for a single spaceflight.",
-    date: "12-10-2023",
-    lesson_num: 12,
-    title: "Пост 12",
-    description: "Описание поста",
-    author: 10,
-  },
-];
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  const cardsList = useSelector(PostSelectors.getPostsList);
+  const totalCount = useSelector(PostSelectors.getTotalPostsCount);
+  const isListLoading = useSelector(PostSelectors.getPostsListLoading)
+
   const [activeTab, setActiveTab] = useState(TabsTypes.All);
   const [isLoggedIn, setLoggedIn] = useState(false);
-  // const cardsList = useSelector()
-  const [cardsList, setCardsList] = useState<PostsList>([]); // TODO: убрать в домашке стейт
+
+  //текущая страница, на которой мы находимся
+  const [currentPage, setCurrentPage] = useState(1);
+
+  //сколько итого у нас страниц
+  const pagesCount = useMemo(
+    () => Math.ceil(totalCount / PER_PAGE),
+    [totalCount]
+  );
 
   const tabsList = useMemo(
     () => [
@@ -163,22 +45,20 @@ const Home = () => {
   );
 
   useEffect(() => {
-    setCardsList(MOCK_ARRAY);
-  }, []);
-
-  useEffect(()=> {
-    if (activeTab === TabsTypes.MyPosts) {
-      // dispatch(getMyPosts)
-    } else {
-      // dispatch(getAllPosts)
-    }
-  }, [activeTab])
+    // сколько надо пропустить постов (сколько мы уже посмотрели)
+    const offset = (currentPage - 1) * PER_PAGE;
+    dispatch(getPostsList({ offset, isOverwrite: true }));
+  }, [currentPage]);
 
   const onTabClick = (tab: TabsTypes) => () => {
     setActiveTab(tab);
     if (tab === TabsTypes.Popular) {
       setLoggedIn(true);
     }
+  };
+
+  const onPageChange = ({ selected }: { selected: number }) => {
+    setCurrentPage(selected + 1);
   };
 
   return (
@@ -189,7 +69,12 @@ const Home = () => {
         activeTab={activeTab}
         onTabClick={onTabClick}
       />
-      <CardsList cardsList={cardsList} />
+      <CardsList cardsList={cardsList} isLoading={isListLoading} />
+      <Pagination
+        currentPage={currentPage}
+        pagesCount={pagesCount}
+        onPageChange={onPageChange}
+      />
       <SelectedPostModal />
     </div>
   );

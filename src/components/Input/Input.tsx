@@ -7,13 +7,14 @@ import { Theme } from "src/@types";
 import styles from "./Input.module.scss";
 
 type InputProps = {
-  title: string;
+  title?: string;
   placeholder: string;
   onChange: (value: string) => void;
   value: string;
   disabled?: boolean;
   errorText?: string;
   isTextarea?: boolean;
+  className?: string;
 };
 
 const Input = forwardRef<
@@ -35,6 +36,7 @@ const Input = forwardRef<
       disabled,
       value,
       isTextarea,
+      className,
     } = props;
 
     const { themeValue } = useThemeContext();
@@ -57,11 +59,11 @@ const Input = forwardRef<
 
     return (
       <div
-        className={classNames(styles.container, {
+        className={classNames(styles.container, className, {
           [styles.darkContainer]: themeValue === Theme.Dark,
         })}
       >
-        <div className={styles.title}>{title}</div>
+        {title && <div className={styles.title}>{title}</div>}
         {isTextarea ? (
           <textarea
             // тут мы присваиваем ref, полученный от родителя нашему DOM узлу

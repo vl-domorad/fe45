@@ -12,9 +12,6 @@
 .darkContainer {
   background-color: $secondary;
 }
-.header {
-  position: fixed;
-}
 .infoContainer {
   margin: 156px auto 0 auto;
 }
@@ -58,4 +55,41 @@
     color: $primary;
     cursor: pointer;
   }
+}
+
+.header {
+  position: fixed;
+  background-color: $primary;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.headerRightSide {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerCenterSearch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: $primary-secondary;
+}
+
+.inputSearch {
+  color: $gray;
+  border-radius: 0;
+  border: none;
+  background-color: $primary-secondary;
+}
+
+.closeSearchButton {
+  height: 84px;
+  width: 84px;
+  border-radius: 0;
+  background-color: $primary-secondary;
 }

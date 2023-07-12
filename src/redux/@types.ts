@@ -1,3 +1,5 @@
+import { PostsList } from "src/@types";
+
 export type PayloadWithDataAndCallback<Data> = {
   data: Data;
   callback: () => void;
@@ -41,4 +43,22 @@ export type UserInfoPayload = {
   username: string;
   email: string;
   id: number;
-}
+};
+
+export type GetPostsPayload = {
+  offset: number;
+  isOverwrite: boolean;
+};
+
+export type SetPostsListPayload = {
+  total: number;
+  postsList: PostsList;
+  isOverwrite: boolean;
+};
+
+export type GetPostsResponseData = {
+  count: number;
+  next: string;
+  previous: string;
+  results: PostsList;
+};

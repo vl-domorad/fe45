@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 
 import Button, { ButtonTypes } from "src/components/Button";
-import { CloseIcon, MenuIcon } from "src/assets/icons";
+import { CloseIcon, MenuIcon, SearchIcon } from "src/assets/icons";
 import ThemeSwitcher from "src/components/ThemeSwitcher";
 import { RoutesList } from "src/pages/Router";
 import Username from "src/components/Username";
@@ -13,9 +13,14 @@ import { Theme } from "src/@types";
 
 import styles from "./Header.module.scss";
 import { AuthSelectors, logoutUser } from "src/redux/reducers/authSlice";
+import Input from "src/components/Input";
 
 const Header = () => {
   const { themeValue } = useThemeContext();
+  const [inputValue, setInputValue] = useState("");
+
+  // открытие и закрытие инпутв
+  const [isSearch, setSearch] = useState(false);
 
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
@@ -43,6 +48,9 @@ const Header = () => {
   const onLogout = () => {
     dispatch(logoutUser());
   };
+  const handleSearchOpened = () => {
+    setSearch(!isSearch);
+  };
 
   return (
     <div
@@ -51,14 +59,50 @@ const Header = () => {
       })}
     >
       <div className={styles.header}>
-        <Button
-          type={ButtonTypes.Primary}
-          title={isOpened ? <CloseIcon /> : <MenuIcon />}
-          onClick={handleMenuOpened}
-          className={styles.burgerMenuButton}
-        />
-        ДОДЕЛАТЬ ДОМА
+        <div className={styles.headerLeftSide}>
+          <Button
+            type={ButtonTypes.Primary}
+            title={isOpened ? <CloseIcon /> : <MenuIcon />}
+            onClick={handleMenuOpened}
+            className={styles.burgerMenuButton}
+          />
+        </div>
+
+        {isSearch ? (
+          <div className={styles.headerCenterSearch}>
+            <Input
+              className={styles.inputSearch}
+              placeholder="Search..."
+              onChange={setInputValue}
+              value={inputValue}
+            />
+            <Button
+              type={ButtonTypes.Primary}
+              title={<CloseIcon />}
+              onClick={handleSearchOpened}
+              className={styles.closeSearchButton}
+            />
+          </div>
+        ) : (
+          <div> </div>
+        )}
+
+        <div className={styles.headerRightSide}>
+          <Button
+            type={ButtonTypes.Primary}
+            title={<SearchIcon />}
+            onClick={handleSearchOpened} // пока что так, но по факту должен открываться поиск. UPD поиск найден в компонентах фигма. Делаем через Инпут
+            className={styles.searchButton}
+          />
+          <Button
+            type={ButtonTypes.Primary}
+            title={<CloseIcon />}
+            onClick={onLoginButtonClick}
+            className={styles.userButton}
+          />
+        </div>
       </div>
+
       <div className={styles.infoContainer}>
         <Outlet />
         <div className={styles.footer}>
