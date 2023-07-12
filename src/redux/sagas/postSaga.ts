@@ -11,7 +11,11 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from "apisauce";
 import API from "src/utils/api";
 import { Post } from "src/@types";
-import { GetPostsPayload, GetPostsResponseData } from "src/redux/@types";
+import {
+  GetPostsPayload,
+  GetPostsResponseData,
+  GetSearchedPostsPayload,
+} from "src/redux/@types";
 import {
   getSearchedPosts,
   setSearchedPosts,
@@ -52,14 +56,23 @@ function* getPostsWorker(action: PayloadAction<GetPostsPayload>) {
   yield put(setPostsListLoading(false));
 }
 
-function* getSearchedPostsWorker(action: PayloadAction<string>) {
+function* getSearchedPostsWorker(
+  action: PayloadAction<GetSearchedPostsPayload>
+) {
+  const { offset, search } = action.payload;
   const response: ApiResponse<GetPostsResponseData> = yield call(
     API.getPosts,
-    0,
-    action.payload
+    offset,
+    search
   );
   if (response.ok && response.data) {
-    yield put(setSearchedPosts(response.data.results));
+    const { results, count } = response.data;
+    yield put(
+      setSearchedPosts({
+        postsList: results,
+        total: count,
+      })
+    );
   } else {
     console.error("Searched Posts error", response.problem);
   }

@@ -56,6 +56,12 @@ export type SetPostsListPayload = {
   isOverwrite: boolean;
 };
 
+export type GetSearchedPostsPayload = {
+  offset: number;
+  search: string;
+};
+export type SetSearchedPostsPayload = Omit<SetPostsListPayload, "isOverwrite">;
+
 export type GetPostsResponseData = {
   count: number;
   next: string;
