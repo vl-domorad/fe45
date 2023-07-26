@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
+import useBreadcrumbs from "use-react-router-breadcrumbs";
 
 import Button, { ButtonTypes } from "src/components/Button";
 import { CloseIcon, MenuIcon, SearchIcon } from "src/assets/icons";
@@ -21,8 +22,23 @@ import {
 } from "src/redux/reducers/postSlice";
 
 const Header = () => {
+  const routes = [
+    { path: RoutesList.Home, breadcrumb: "Home" },
+    { path: RoutesList.SignUp, breadcrumb: "Sign Up" },
+    { path: RoutesList.SignIn, breadcrumb: "Sign In" },
+    {
+      path: RoutesList.SelectedPost,
+      breadcrumb: ({ match }: any) => <span>Post {match?.params?.id}</span>,
+    },
+    {
+      path: RoutesList.Search,
+      breadcrumb: ({ match }: any) => <span>{match?.params?.search}</span>,
+    },
+  ];
   const { themeValue } = useThemeContext();
   // открытие и закрытие инпутв
+
+  const breadcrumbs = useBreadcrumbs(routes);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -150,6 +166,13 @@ const Header = () => {
       </div>
 
       <div className={styles.infoContainer}>
+        <div className={styles.breadcrumbsContainer}>
+          {breadcrumbs.map(({ match, breadcrumb }) => (
+            <NavLink key={match.pathname} to={match.pathname}>
+              {breadcrumb}
+            </NavLink>
+          ))}
+        </div>
         <Outlet />
         <div className={styles.footer}>
           <div>©2022 Blogfolio</div>

@@ -31,10 +31,6 @@ const SelectedPost = () => {
 
   return singlePost && !isSinglePostLoading ? (
     <div className={styles.container}>
-      <div className={styles.breadcrumbs}>
-        <span onClick={onHomeClick}>Home</span>{" "}
-        <span className={styles.postNumber}>| Post {singlePost.id}</span>
-      </div>
       <div className={styles.title}>{singlePost.title}</div>
       <div className={styles.selectedPostImage}>
         <img src={singlePost.image} alt="#" />

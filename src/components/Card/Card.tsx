@@ -16,7 +16,7 @@ export enum CardTypes {
   Large = "large",
   Medium = "medium",
   Small = "small",
-  Search = "search"
+  Search = "search",
 }
 interface CardProps extends Post {
   onMoreClick?: () => void;
@@ -37,7 +37,7 @@ const Card: FC<CardProps> = ({
   const navigate = useNavigate();
 
   const onTitleClick = () => {
-    navigate(`/post/${id}`);
+    navigate(`/${id}`);
   };
 
   return (
