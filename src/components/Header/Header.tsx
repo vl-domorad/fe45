@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,21 +14,26 @@ import { Theme } from "src/@types";
 import styles from "./Header.module.scss";
 import { AuthSelectors, logoutUser } from "src/redux/reducers/authSlice";
 import Input from "src/components/Input";
-import { clearSearchedPosts } from "src/redux/reducers/postSlice";
+import {
+  clearSearchedPosts,
+  getSearchedPosts,
+  PostSelectors,
+} from "src/redux/reducers/postSlice";
 
 const Header = () => {
   const { themeValue } = useThemeContext();
-  const [inputValue, setInputValue] = useState("");
-
   // открытие и закрытие инпутв
-  const [isSearch, setSearch] = useState(false);
-
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
-
-  const [isOpened, setOpened] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const searchedPosts = useSelector(PostSelectors.getSearchedPosts);
+  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
+
+  const [inputValue, setInputValue] = useState("");
+  const [isSearch, setSearch] = useState(false);
+  const [isOpened, setOpened] = useState(false);
+  const [isDropdownOpened, setDropdownOpened] = useState(false);
 
   const navLinks = useMemo(
     () => [
@@ -38,11 +43,22 @@ const Header = () => {
     [isLoggedIn]
   );
 
+  useEffect(() => {
+    if (inputValue.length) {
+      dispatch(
+        getSearchedPosts({ search: inputValue, offset: 0, isOverwrite: true })
+      );
+    } else {
+      dispatch(clearSearchedPosts());
+    }
+  }, [inputValue]);
+
   const handleMenuOpened = () => {
     setOpened(!isOpened);
   };
   const handleSearchOpened = () => {
     setSearch(!isSearch);
+    setDropdownOpened(true);
     if (isSearch && inputValue) {
       dispatch(clearSearchedPosts());
       navigate(`posts/${inputValue}`);
@@ -56,6 +72,11 @@ const Header = () => {
 
   const onLogout = () => {
     dispatch(logoutUser());
+  };
+
+  const onClickDropdownItem = (id: number) => () => {
+    setDropdownOpened(false);
+    navigate(`/post/${id}`);
   };
 
   return (
@@ -88,6 +109,25 @@ const Header = () => {
               onClick={handleSearchOpened}
               className={styles.closeSearchButton}
             />
+            {!!searchedPosts.length && isDropdownOpened && (
+              <div className={styles.dropdown}>
+                {searchedPosts.map(({ title, image, id, text }) => (
+                  <div
+                    key={id}
+                    onClick={onClickDropdownItem(id)}
+                    className={styles.dropdownItem}
+                  >
+                    <img src={image} alt="" />
+                    <div className={styles.dropdownItemInfo}>
+                      <div className={styles.dropdownItemTitle}>{title}</div>
+                      <div className={styles.dropdownItemDescription}>
+                        {text}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div> </div>

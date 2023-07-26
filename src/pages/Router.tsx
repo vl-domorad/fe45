@@ -11,6 +11,9 @@ import SignIn from "src/pages/SignIn";
 import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice";
 import Search from "src/pages/Search";
 
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 export enum RoutesList {
   Home = "/",
   SignUp = "/sign-up",
@@ -31,46 +34,49 @@ const Router = () => {
     }
   }, [isLoggedIn]);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={RoutesList.Home} element={<Header />}>
-          <Route path={RoutesList.Home} element={<Home />} />
-          <Route path={RoutesList.SignIn} element={<SignIn />} />
-          <Route
-            path={RoutesList.SignUp}
-            element={
-              !isLoggedIn ? <SignUp /> : <Navigate to={RoutesList.Home} />
-            }
-          />
-          <Route
-            path={RoutesList.SignIn}
-            element={
-              !isLoggedIn ? <SignIn /> : <Navigate to={RoutesList.Home} />
-            }
-          />
-          <Route
-            path={RoutesList.RegistrationConfirmation}
-            element={
-              !isLoggedIn ? (
-                <RegistrationConfirmation />
-              ) : (
-                <Navigate to={RoutesList.Home} />
-              )
-            }
-          />
-          <Route path={RoutesList.SelectedPost} element={<SelectedPost />} />
-          <Route
-            path={RoutesList.RegistrationConfirmation}
-            element={<RegistrationConfirmation />}
-          />
-          <Route path={RoutesList.Search} element={<Search />} />
-          <Route
-            path={RoutesList.Default}
-            element={<Navigate to={RoutesList.Home} />}
-          />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path={RoutesList.Home} element={<Header />}>
+            <Route path={RoutesList.Home} element={<Home />} />
+            <Route path={RoutesList.SignIn} element={<SignIn />} />
+            <Route
+              path={RoutesList.SignUp}
+              element={
+                !isLoggedIn ? <SignUp /> : <Navigate to={RoutesList.Home} />
+              }
+            />
+            <Route
+              path={RoutesList.SignIn}
+              element={
+                !isLoggedIn ? <SignIn /> : <Navigate to={RoutesList.Home} />
+              }
+            />
+            <Route
+              path={RoutesList.RegistrationConfirmation}
+              element={
+                !isLoggedIn ? (
+                  <RegistrationConfirmation />
+                ) : (
+                  <Navigate to={RoutesList.Home} />
+                )
+              }
+            />
+            <Route path={RoutesList.SelectedPost} element={<SelectedPost />} />
+            <Route
+              path={RoutesList.RegistrationConfirmation}
+              element={<RegistrationConfirmation />}
+            />
+            <Route path={RoutesList.Search} element={<Search />} />
+            <Route
+              path={RoutesList.Default}
+              element={<Navigate to={RoutesList.Home} />}
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer />
+    </>
   );
 };
 

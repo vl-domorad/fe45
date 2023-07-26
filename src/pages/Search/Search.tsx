@@ -28,7 +28,7 @@ const Search = () => {
       navigate(RoutesList.Home);
     } else {
       const offset = (currentPage - 1) * PER_PAGE;
-      dispatch(getSearchedPosts({ search, offset }));
+      dispatch(getSearchedPosts({ search, offset, isOverwrite: false }));
     }
   }, [dispatch, navigate, search, currentPage]);
 
